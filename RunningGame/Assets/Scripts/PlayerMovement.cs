@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,24 +21,27 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isCrouching = false;
     public float crouchMultiplier = 0.5f;
+    private Vector3 slideDirection;
+    private bool isSliding = false;
+    public float slideDeceleration = 10f;
+    private float slideSpeed = 0f;
+    public float slopeAcceleration = 15f;
+    public float maxSlideSpeed = 15f;
 
     public Camera mainCamera;
     private Vector2 cameraInput;
     public float cameraSensitivity = 0.5f;
-    private float xRotation = 0f;   // Vertikální rotace
+    private float xRotation = 0f;
     
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        if (controller == null)
-            controller = gameObject.AddComponent<CharacterController>();
-        // Pokud neexistuje komponent CharacterController, přidá se v Inspektoru
 
         mainCamera = Camera.main;
 
-        Cursor.lockState = CursorLockMode.Locked;   // Zamkne kurzor uprostřed obrazovky
-        Cursor.visible = false;     // Aby nebyl kursor vidět
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -70,8 +74,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        if (context.started) isCrouching = true;
-        else if (context.canceled) isCrouching = false;
+        if (context.started)
+        {
+            if (isSprinting && moveInput.y > 0f)
+            {
+                isSliding = true;
+                slideDirection = transform.forward;
+                slideSpeed = speed * sprintMultiplier;
+            }
+            else isCrouching = true;
+        }
+        else if (context.canceled)
+        {
+            isCrouching = false;
+            isSliding = false;
+        }
     }
     
     private void Update()
@@ -79,9 +96,42 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = controller.isGrounded;
 
         // --- Movement ---
-        Vector3 move = transform.TransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
+        Vector3 move = Vector3.zero;
+        if (!isSliding) move = transform.TransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
+
         float currentSpeed;
-        if (isCrouching) currentSpeed = speed * crouchMultiplier;
+        if (isSliding)
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.5f))
+            {
+                Vector3 groundNormal = hit.normal;
+                Vector3 camForward = mainCamera.transform.forward;
+                Vector3 slideDir = Vector3.ProjectOnPlane(camForward, groundNormal).normalized;
+
+                slideDirection = Vector3.Lerp(slideDirection, slideDir, Time.deltaTime * 10f);
+
+                float slopeAngle = Vector3.Angle(Vector3.up, groundNormal);
+                if (slopeAngle > 5f)
+                {
+                    float slopeFactor = Mathf.Sign(Vector3.Dot(slideDir, Vector3.down)) * slopeAngle / 45f;
+                    slideSpeed += slopeFactor * slopeAcceleration * Time.deltaTime;
+                }
+
+                slideSpeed = Mathf.MoveTowards(slideSpeed, 0f, slideDeceleration * Time.deltaTime);
+                slideSpeed = Mathf.Clamp(slideSpeed, 0f, maxSlideSpeed);
+            }
+
+            move = slideDirection;
+            currentSpeed = slideSpeed;
+
+            if (slideSpeed <= speed * crouchMultiplier)
+            {
+                isSliding = false;
+                isCrouching = true;
+                slideSpeed = 0f;
+            }
+        }
+        else if (isCrouching) currentSpeed = speed * crouchMultiplier;
         else if (isSprinting) currentSpeed = speed * sprintMultiplier;
         else currentSpeed = speed;
         controller.Move(move * currentSpeed * Time.deltaTime);
@@ -91,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && jumpHeld && jumpQueued)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            jumpQueued = false;     // Aby neskočilo vícekrát, než se dostaneš ze země
+            jumpQueued = false;
         }
         if (!isGrounded && !jumpQueued) jumpQueued = true;
 
@@ -100,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         // --- Crouch ---
-        float targetScaleY = isCrouching ? 0.5f : 1f;
+        float targetScaleY = (isCrouching || isSliding) ? 0.5f : 1f;
         Vector3 scale = transform.localScale;
         scale.y = Mathf.Lerp(scale.y, targetScaleY, 30 * Time.deltaTime);
         transform.localScale = scale;
@@ -111,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Vertikální rotace
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);  // Aby se nepřetočila kamera moc nahorů nebo dolů, zastavuje se na 90°
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         mainCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Horizontální rotace
