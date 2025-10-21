@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -30f;
 
     private bool isCrouching = false;
+    private bool crouchHeld = false;
     public float crouchMultiplier = 0.5f;
     private Vector3 slideDirection;
     private bool isSliding = false;
@@ -76,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.started)
         {
+            crouchHeld = true;
             if (isSprinting && moveInput.y > 0f)
             {
                 isSliding = true;
@@ -86,14 +88,29 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (context.canceled)
         {
-            isCrouching = false;
-            isSliding = false;
+            crouchHeld = false;
         }
     }
-    
+
+    private bool CanStand()
+    {
+        // Prosím nesmějte se mi, mě jiné způsoby nešli ;-;
+        bool center = !Physics.Raycast(transform.position, Vector3.up, 1f);
+        bool north = !Physics.Raycast(transform.position + new Vector3(0, 0, 0.45f), Vector3.up, 1f);
+        bool south = !Physics.Raycast(transform.position + new Vector3(0, 0, -0.45f), Vector3.up, 1f);
+        bool east = !Physics.Raycast(transform.position + new Vector3(0.45f, 0, 0), Vector3.up, 1f);
+        bool west = !Physics.Raycast(transform.position + new Vector3(-0.45f, 0, 0), Vector3.up, 1f);
+        return center && north && south && east && west;
+    }
+
     private void Update()
     {
         isGrounded = controller.isGrounded;
+        if (!crouchHeld && (isCrouching || isSliding) && CanStand())
+        {
+            isCrouching = false;
+            isSliding = false;
+        }
 
         // --- Movement ---
         Vector3 move = Vector3.zero;
