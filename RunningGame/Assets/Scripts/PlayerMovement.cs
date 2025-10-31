@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,8 +19,17 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = false;
     public float jumpHeight = 1.5f;
     public float gravity = -30f;
+    
+    private int wallJumpCount = 0;
+    public int maxWallJumps = 1;
+    private Vector3 wallJumpPush = Vector3.zero;
+    public float wallJumpPushStrength = 5f;
+    public float wallJumpPushDuration = 0.2f;
+    private float wallJumpPushTimer = 0f;
+    private float airControlMultiplier = 0f;
 
     private bool isCrouching = false;
+    private bool crouchHeld = false;
     public float crouchMultiplier = 0.5f;
     private Vector3 slideDirection;
     private bool isSliding = false;
@@ -32,14 +42,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 cameraInput;
     public float cameraSensitivity = 0.5f;
     private float xRotation = 0f;
-    
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-
         mainCamera = Camera.main;
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -47,13 +54,11 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        //Debug.Log("Movement input: " + moveInput);
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
         cameraInput = context.ReadValue<Vector2>();
-        //Debug.Log("Camera input: " + cameraInput);
     }
     
     public void OnJump(InputAction.CallbackContext context)
@@ -66,6 +71,14 @@ public class PlayerMovement : MonoBehaviour
         else if (context.canceled) jumpHeld = false;
     }
 
+    public void OnWallJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            TryWallJump();
+        }
+    }
+
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.started) isSprinting = true;
@@ -76,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.started)
         {
+            crouchHeld = true;
             if (isSprinting && moveInput.y > 0f)
             {
                 isSliding = true;
@@ -86,19 +100,120 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (context.canceled)
         {
-            isCrouching = false;
-            isSliding = false;
+            crouchHeld = false;
         }
     }
+
+    private bool CanStand()
+    {
+        float checkHeight = 1f;
+        Vector3[] offsets = {
+            Vector3.zero,
+            new Vector3(0, 0, 0.4f),
+            new Vector3(0, 0, -0.4f),
+            new Vector3(0.4f, 0, 0),
+            new Vector3(-0.4f, 0, 0),
+            new Vector3(0.2f, 0, 0.2f),
+            new Vector3(-0.2f, 0, 0.2f),
+            new Vector3(0.2f, 0, -0.2f),
+            new Vector3(-0.2f, 0, -0.2f)
+        };
+
+        foreach (var offset in offsets)
+        {
+            if (Physics.Raycast(transform.position + offset, Vector3.up, checkHeight)) return false;
+        }
+        return true;
+    }
+
+    private bool IsTouchingWall()
+    {
+        float distance = 0.6f;
     
+        Vector3[] directions = {
+            transform.forward,
+            -transform.forward,
+            transform.right,
+            -transform.right,
+            (transform.forward + transform.right).normalized,
+            (transform.forward - transform.right).normalized,
+            (-transform.forward + transform.right).normalized,
+            (-transform.forward - transform.right).normalized
+        };
+
+        foreach (var dir in directions)
+        {
+            if (Physics.Raycast(transform.position, dir, distance)) return true;
+        }
+
+        return false;
+    }
+
+    private void TryWallJump()
+    {
+        if (!isGrounded && IsTouchingWall() && wallJumpCount < maxWallJumps)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            wallJumpCount++;
+    
+            Vector3 wallNormal;
+            if (GetWallNormal(out wallNormal))
+            {
+                wallJumpPush = wallNormal * wallJumpPushStrength;
+                wallJumpPushTimer = wallJumpPushDuration;
+            }
+        }
+    }
+
+    private bool GetWallNormal(out Vector3 wallNormal)
+    {
+        float distance = 0.6f;
+        Vector3[] directions = {
+            transform.forward,
+            -transform.forward,
+            transform.right,
+            -transform.right,
+            (transform.forward + transform.right).normalized,
+            (transform.forward - transform.right).normalized,
+            (-transform.forward + transform.right).normalized,
+            (-transform.forward - transform.right).normalized
+        };
+
+        foreach (var dir in directions)
+        {
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, distance))
+            {
+                wallNormal = hit.normal;
+                return true;
+            }
+        }
+
+        wallNormal = Vector3.zero;
+        return false;
+    }
+
     private void Update()
     {
         isGrounded = controller.isGrounded;
 
+        if (isGrounded)
+        {
+            wallJumpCount = 0;
+            airControlMultiplier = 1f;
+        }
+        else airControlMultiplier = 0.8f;
+
+        if (!crouchHeld && (isCrouching || isSliding) && CanStand())
+        {
+            isCrouching = false;
+            isSliding = false;
+        }
+
         // --- Movement ---
         Vector3 move = Vector3.zero;
+        
         if (!isSliding) move = transform.TransformDirection(new Vector3(moveInput.x, 0, moveInput.y));
-
+        
         float currentSpeed;
         if (isSliding)
         {
@@ -122,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             move = slideDirection;
-            currentSpeed = slideSpeed;
+            currentSpeed = slideSpeed * airControlMultiplier;
 
             if (slideSpeed <= speed * crouchMultiplier)
             {
@@ -131,10 +246,19 @@ public class PlayerMovement : MonoBehaviour
                 slideSpeed = 0f;
             }
         }
-        else if (isCrouching) currentSpeed = speed * crouchMultiplier;
-        else if (isSprinting) currentSpeed = speed * sprintMultiplier;
-        else currentSpeed = speed;
+        else if (isCrouching) currentSpeed = speed * crouchMultiplier * airControlMultiplier;
+        else if (isSprinting) currentSpeed = speed * sprintMultiplier * airControlMultiplier;
+        else currentSpeed = speed * airControlMultiplier;
         controller.Move(move * currentSpeed * Time.deltaTime);
+
+        // --- Wall jump push ---
+        if (wallJumpPushTimer > 0f)
+        {
+            controller.Move(wallJumpPush * Time.deltaTime);
+            wallJumpPushTimer -= Time.deltaTime;
+
+            wallJumpPush = Vector3.Lerp(wallJumpPush, Vector3.zero, Time.deltaTime * 5f);
+        }
 
         // --- Jump ---
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
@@ -145,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!isGrounded && !jumpQueued) jumpQueued = true;
 
-        // --- Gravitace ---
+        // --- Gravity ---
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
@@ -159,12 +283,9 @@ public class PlayerMovement : MonoBehaviour
         float mouseX = cameraInput.x * cameraSensitivity;
         float mouseY = cameraInput.y * cameraSensitivity;
 
-        // Vertikální rotace
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         mainCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        // Horizontální rotace
         transform.Rotate(Vector3.up * mouseX);
     }
 }
