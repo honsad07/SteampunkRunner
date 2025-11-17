@@ -1641,6 +1641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8480921356549826167}
+  - component: {fileID: -6669934587633573892}
   m_Layer: 0
   m_Name: 01_RightTurn
   m_TagString: Untagged
@@ -1667,6 +1668,19 @@ Transform:
   - {fileID: 7383846319922029787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6669934587633573892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494564513923573893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22a89db109d6cb4c93e22d3e54cf944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomHandler
+  exit: {fileID: 0}
 --- !u!1 &8494782061455997720
 GameObject:
   m_ObjectHideFlags: 0

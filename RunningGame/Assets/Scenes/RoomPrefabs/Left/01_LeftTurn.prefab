@@ -185,6 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4084631845257477769}
+  - component: {fileID: 6371272875846360318}
   m_Layer: 0
   m_Name: 01_LeftTurn
   m_TagString: Untagged
@@ -211,6 +212,19 @@ Transform:
   - {fileID: 166998343233439878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6371272875846360318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172811384534469603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22a89db109d6cb4c93e22d3e54cf944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomHandler
+  exit: {fileID: 0}
 --- !u!1 &1391171271061457509
 GameObject:
   m_ObjectHideFlags: 0
