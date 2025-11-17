@@ -1509,6 +1509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7483828110405872492}
+  - component: {fileID: -8192285273336775517}
   m_Layer: 0
   m_Name: 00_WaitingRoom
   m_TagString: Untagged
@@ -1535,3 +1536,16 @@ Transform:
   - {fileID: 4377357537880383565}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8192285273336775517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642439232407400416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22a89db109d6cb4c93e22d3e54cf944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomHandler
+  exit: {fileID: 0}
