@@ -6,6 +6,10 @@ public class RoomHandler : MonoBehaviour
 
     void Awake()
     {
-        exit = transform.Find("EXIT");
+        exit = transform.Find("Doors/Exit/EXIT");
+        if(exit == null)
+        {
+            exit = transform.Find("Door/Exit/EXIT");
+        }
     }
 }
