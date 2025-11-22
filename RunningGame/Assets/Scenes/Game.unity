@@ -383,64 +383,9 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1553125197
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1553125198}
-  - component: {fileID: 1553125199}
-  m_Layer: 0
-  m_Name: roomGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1553125198
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553125197}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1553125199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553125197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784203b5af1f73f48a001e9177fed282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoomGenerator
-  straightRooms:
-  - {fileID: 3656785798218723530, guid: 92e875fe9e344ff4596122dfdb864b27, type: 3}
-  - {fileID: 2107174997025257014, guid: b7e335e21e03f6a4783ea0785e1664bb, type: 3}
-  - {fileID: 1155799093956306464, guid: 849a7e7fc686fbe4d931c69ab4e3e5bf, type: 3}
-  - {fileID: 9020140421460135535, guid: b2a692a490933a545b6b944cf28d0864, type: 3}
-  leftRooms:
-  - {fileID: 7442070447700338578, guid: 1e7547b2310320241a30fd72641079f4, type: 3}
-  rightRooms:
-  - {fileID: 8494564513923573893, guid: d7a78031f61137542b6ee21374d26f52, type: 3}
-  startEndRoom: {fileID: 8642439232407400416, guid: ce1d3a477c025a44485e08134f221d73, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1369344002}
   - {fileID: 1467849685}
-  - {fileID: 1553125198}
