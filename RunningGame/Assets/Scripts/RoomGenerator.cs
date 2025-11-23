@@ -3,13 +3,18 @@ using System.Collections.Generic;
 
 public class RoomGenerator : MonoBehaviour
 {
-    int roomCount = 8;
+    public int roomCount = 30;
     int level = 1;
 
     public List<GameObject> straightRooms;
     public List<GameObject> leftRooms;
     public List<GameObject> rightRooms;
     public GameObject startEndRoom;
+    
+    private GameObject currentLevelParent;
+    
+    public GameObject previousEndWaitingRoom;
+    public GameObject currentEndWaitingRoom;
 
     private Transform currentEXIT;
     private Direction currentDirection = Direction.Forward;
@@ -24,22 +29,45 @@ public class RoomGenerator : MonoBehaviour
 
     void GenerateRooms()
     {
-        GameObject start = Instantiate(startEndRoom, Vector3.zero, Quaternion.identity);
-        currentEXIT = start.GetComponent<RoomHandler>().exit;
+        GameObject newLevelParent = new GameObject("Level_" + level);
 
-        for(int i = 0; i < roomCount; i++)
+        Vector3 startPosition;
+        Quaternion startRotation;
+
+        if (currentEndWaitingRoom != null)
         {
-            SpawnNextRoom();
+            RoomHandler prevExitHandler = currentEndWaitingRoom.GetComponent<RoomHandler>();
+        
+            currentEXIT = prevExitHandler.exit;
+        }
+        else
+        {
+            startPosition = Vector3.zero;
+            startRotation = Quaternion.identity;
+
+            GameObject startRoom = Instantiate(startEndRoom, startPosition, startRotation);
+
+            currentEXIT = startRoom.GetComponent<RoomHandler>().exit;
         }
 
-        Instantiate(startEndRoom, currentEXIT.position, currentEXIT.rotation);
-    }
+        for (int i = 0; i < roomCount; i++)
+        {
+            GameObject prefab = ChooseNextRoom();
+            GameObject room = Instantiate(prefab, currentEXIT.position, currentEXIT.rotation);
+            room.transform.parent = newLevelParent.transform;
+            currentEXIT = room.GetComponent<RoomHandler>().exit;
+        }
 
-    void SpawnNextRoom()
-    {
-        GameObject prefab = ChooseNextRoom();
-        GameObject room = Instantiate(prefab, currentEXIT.position, currentEXIT.rotation);
-        currentEXIT = room.GetComponent<RoomHandler>().exit;
+        GameObject newEndWaitingRoom = Instantiate(startEndRoom, currentEXIT.position, currentEXIT.rotation);
+        var trigger = newEndWaitingRoom.AddComponent<WaitingRoomTrigger>();
+        trigger.generator = this;
+
+        if (currentEndWaitingRoom != null) previousEndWaitingRoom = currentEndWaitingRoom;
+
+        currentLevelParent = newLevelParent;
+        currentEndWaitingRoom = newEndWaitingRoom;
+
+        level++;
     }
 
     GameObject ChooseNextRoom()
@@ -89,5 +117,30 @@ public class RoomGenerator : MonoBehaviour
                 return straightRooms[Random.Range(0, straightRooms.Count)];
             }
         }
+    }
+
+    public void OnReachedWaitingRoom()
+    {
+        string oldLevelName = "Level_" + (level - 1);
+
+        GameObject oldLevel = GameObject.Find(oldLevelName);
+
+        if (oldLevel != null)
+        {
+            Destroy(oldLevel);
+            Debug.Log("Destroyed: " + oldLevelName);
+        }
+        else
+        {
+            Debug.Log("Could not find: " + oldLevelName);
+        }
+
+        if (previousEndWaitingRoom != null)
+        {
+            Destroy(previousEndWaitingRoom);
+            previousEndWaitingRoom = null;
+        }
+
+        GenerateRooms();
     }
 }
