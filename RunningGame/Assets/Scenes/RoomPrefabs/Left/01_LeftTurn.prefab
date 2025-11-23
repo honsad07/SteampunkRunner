@@ -1769,12 +1769,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2806948448263282735}
   m_Layer: 0
-  m_Name: Door
+  m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2806948448263282735
 Transform:
   m_ObjectHideFlags: 0

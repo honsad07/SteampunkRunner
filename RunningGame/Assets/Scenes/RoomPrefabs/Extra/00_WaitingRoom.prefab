@@ -121,12 +121,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5798584984509448058}
   m_Layer: 0
-  m_Name: Door
+  m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5798584984509448058
 Transform:
   m_ObjectHideFlags: 0
@@ -1510,6 +1510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7483828110405872492}
   - component: {fileID: -8192285273336775517}
+  - component: {fileID: 1349327398472221428}
   m_Layer: 0
   m_Name: 00_WaitingRoom
   m_TagString: Untagged
@@ -1549,3 +1550,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomHandler
   exit: {fileID: 0}
+--- !u!65 &1349327398472221428
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642439232407400416}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 4, z: 5}
+  m_Center: {x: 0, y: 2, z: 3.5}
