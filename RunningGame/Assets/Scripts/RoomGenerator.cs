@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 public class RoomGenerator : MonoBehaviour
 {
-    public int roomCount = 30;
-    int level = 1;
+    private int roomCount = 3;
+    private int level = 1;
 
     public List<GameObject> straightRooms;
     public List<GameObject> leftRooms;
     public List<GameObject> rightRooms;
     public GameObject startEndRoom;
-    
-    private GameObject currentLevelParent;
     
     public GameObject previousEndWaitingRoom;
     public GameObject currentEndWaitingRoom;
@@ -64,10 +62,10 @@ public class RoomGenerator : MonoBehaviour
 
         if (currentEndWaitingRoom != null) previousEndWaitingRoom = currentEndWaitingRoom;
 
-        currentLevelParent = newLevelParent;
         currentEndWaitingRoom = newEndWaitingRoom;
 
         level++;
+        roomCount += 5;
     }
 
     GameObject ChooseNextRoom()
