@@ -10,6 +10,11 @@ public class GameManager  : MonoBehaviour
     public GameObject pauseMenuUI;
     public bool isPaused = false;
 
+    private void Start()
+    {
+        Resume();
+    }
+
     public void OnPause(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
