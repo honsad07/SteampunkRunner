@@ -298,7 +298,6 @@ GameObject:
   m_Component:
   - component: {fileID: 36110199919001599}
   - component: {fileID: -9086819008207007749}
-  - component: {fileID: 1375987675348285713}
   m_Layer: 0
   m_Name: 03_StraightUpstairs
   m_TagString: Untagged
@@ -319,6 +318,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5832110858608968516}
   - {fileID: 8128871426398870495}
   - {fileID: 4004952991396930446}
   - {fileID: 7274773853642734204}
@@ -338,13 +338,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomHandler
   exit: {fileID: 0}
---- !u!65 &1375987675348285713
+--- !u!1 &2167118958624103814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5832110858608968516}
+  - component: {fileID: 1566052725080613499}
+  - component: {fileID: 6284953677037207953}
+  m_Layer: 0
+  m_Name: DoorTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5832110858608968516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167118958624103814}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 36110199919001599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1566052725080613499
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1155799093956306464}
+  m_GameObject: {fileID: 2167118958624103814}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -359,6 +392,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3.5, z: 1}
   m_Center: {x: 0, y: 5.06, z: 28.1}
+--- !u!114 &6284953677037207953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167118958624103814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa101fc071c1064a9e43822ce0b3b5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  doorToDisable: {fileID: 354368634270670450}
 --- !u!1 &2400893890310128515
 GameObject:
   m_ObjectHideFlags: 0

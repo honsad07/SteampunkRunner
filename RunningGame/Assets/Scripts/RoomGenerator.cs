@@ -139,6 +139,17 @@ public class RoomGenerator : MonoBehaviour
             previousEndWaitingRoom = null;
         }
 
+        Transform enterDoor = currentEndWaitingRoom.transform.Find("Doors/Enter");
+        if (enterDoor != null)
+        {
+            enterDoor.gameObject.SetActive(true);
+            Debug.Log("Closed entrance door.");
+        }
+        else
+        {
+            Debug.LogWarning("Enter door not found! Check path: Doors/Enter");
+        }
+
         GenerateRooms();
     }
 }
