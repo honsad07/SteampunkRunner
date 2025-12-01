@@ -18,11 +18,18 @@ public class RoomGenerator : MonoBehaviour
     private Direction currentDirection = Direction.Forward;
     private bool lastRoomWasTurn = false;
 
-    private enum Direction {Forward, Left, Right };
+    private enum Direction { Forward, Left, Right };
+
+    private GameTimer gameTimer;
 
     void Start()
     {
+        gameTimer = GameObject.FindObjectOfType<GameTimer>(true);
         GenerateRooms();
+        
+        // 💡 ADD THIS LINE:
+        // This manually unlocks the very first door after it has been created.
+        DoorTrigger.canProceed = true; 
     }
 
     void GenerateRooms()
@@ -59,6 +66,7 @@ public class RoomGenerator : MonoBehaviour
         GameObject newEndWaitingRoom = Instantiate(startEndRoom, currentEXIT.position, currentEXIT.rotation);
         var trigger = newEndWaitingRoom.AddComponent<WaitingRoomTrigger>();
         trigger.generator = this;
+        trigger.timer = gameTimer;
 
         if (currentEndWaitingRoom != null) previousEndWaitingRoom = currentEndWaitingRoom;
 
