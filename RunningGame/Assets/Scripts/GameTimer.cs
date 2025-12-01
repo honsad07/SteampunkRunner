@@ -21,7 +21,6 @@ public class GameTimer : MonoBehaviour
             timeRemaining = 0;
             isRunning = false;
             
-            // 💡 TRIGGER THE LOSE STATE HERE
             HandleLose(); 
         }
     
