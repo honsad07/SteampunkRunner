@@ -1,12 +1,14 @@
 using NUnit.Framework;
 using Unity.Mathematics;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameManager gameManager;
+    public bool isPaused => isPaused;
+
     private CharacterController controller;
     private Vector2 moveInput;
     public float speed = 6f;
@@ -194,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (gameManager != null && gameManager.isPaused) return;
         isGrounded = controller.isGrounded;
 
         if (isGrounded)
