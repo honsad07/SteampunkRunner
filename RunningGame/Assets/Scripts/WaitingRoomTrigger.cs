@@ -27,7 +27,6 @@ public class WaitingRoomTrigger : MonoBehaviour
         Debug.Log("Waiting room entered. Waiting for " + waitTimer + " seconds...");
         yield return new WaitForSeconds(waitTimer);
         DoorTrigger.canProceed = true;
-        
         Debug.Log("Wait over! Player can now proceed through the waiting room door.");
     }
 }

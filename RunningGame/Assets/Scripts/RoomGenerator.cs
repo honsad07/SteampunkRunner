@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class RoomGenerator : MonoBehaviour
 {
-    private int roomCount = 3;
+    private int roomCount = 20;
     private int level = 1;
 
     public List<GameObject> straightRooms;
@@ -27,8 +27,6 @@ public class RoomGenerator : MonoBehaviour
         gameTimer = GameObject.FindObjectOfType<GameTimer>(true);
         GenerateRooms();
         
-        // 💡 ADD THIS LINE:
-        // This manually unlocks the very first door after it has been created.
         DoorTrigger.canProceed = true; 
     }
 
@@ -73,7 +71,7 @@ public class RoomGenerator : MonoBehaviour
         currentEndWaitingRoom = newEndWaitingRoom;
 
         level++;
-        roomCount += 5;
+        roomCount += 3;
     }
 
     GameObject ChooseNextRoom()
