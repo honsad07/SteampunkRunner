@@ -1,4 +1,8 @@
 
+@font-face{
+	src: url(SteampunkMachineryFont-Regular.ttf);
+	
+}
 p {
     text-align: center;
     color: black;
@@ -14,19 +18,30 @@ div {
 }
 .aktualne {
 	background-color: LightCyan;
+	opacity: 0.5;
 }
 body {
-    background-image: url("image.png");
 	background-color: #cccccc;
 	background-repeat: repeat;
 	background-size: cover;
 	backface-visibility: 90%;
+	z-index: -1;
 }
 .vyber:hover {
-	background-color: LightBlue;
+	background-color: LightCyan;
+	opacity: 0.5;
 }
 .prvni {
-	box-shadow: 0 4px 8px grey;
+	/*border-left: 5px solid SkyBlue;
+	border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+	overflow: hidden;*/
+}
+.prvni:hover {
+	/*border-left: 5px solid LightBlue;
+	border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+	overflow: hidden;*/
 }
 .posledni{
 	box-shadow: 20px 0px 0px -10px grey;
@@ -38,17 +53,18 @@ li a {
     color: black;
     text-decoration: none;
     font-size: 100%;
-    padding: 25px 0;  
+    padding: 30px 0;  
 }
 a {
-    font-weight: bold;    
+	font-family: "Steampunk Machinery Font", serif;
 }
 li {
     text-align: center;
     display: inline-block;
     list-style-type: none;
     width: 15%;
-    background-color: SkyBlue;
+	border: 1px solid black;
+    /*background-color: SkyBlue;*/
     padding: 0;   
 }
 article {
@@ -58,3 +74,14 @@ article {
 	background-color: #f1f1f1;
 	height: 300px; 
 	}
+.heading{
+	font-size:400%;
+	height: 10%;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	margin-right: 660px;
+	margin-left: 660px;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-family: "Steampunk Machinery Font", serif;
+}
