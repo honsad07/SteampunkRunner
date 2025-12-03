@@ -74,13 +74,13 @@ article {
 	background-color: #f1f1f1;
 	height: 300px; 
 	}
+.parent {
+    text-align: center;
+}
 .heading{
+	text-align: center;
+	display: inline-block;	
 	font-size:400%;
-	height: 10%;
-	margin-top: 100px;
-	margin-bottom: 100px;
-	margin-right: 660px;
-	margin-left: 660px;
 	border: 2px solid black;
 	border-radius: 10px;
 	font-family: "Steampunk Machinery Font", serif;
