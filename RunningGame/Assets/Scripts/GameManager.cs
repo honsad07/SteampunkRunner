@@ -9,6 +9,7 @@ public class GameManager  : MonoBehaviour
 {
     public GameObject pauseMenuUI;
     public bool isPaused = false;
+    public GameTimer timer;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class GameManager  : MonoBehaviour
     public void OnPause(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
+        if (timer.isDead) return;
         if (isPaused) Resume();
         else Pause();
     }
@@ -43,5 +45,12 @@ public class GameManager  : MonoBehaviour
     public void Exit()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        DoorTrigger.canProceed = true;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Game");
     }
 }

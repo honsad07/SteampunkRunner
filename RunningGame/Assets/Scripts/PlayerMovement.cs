@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameManager gameManager;
     public bool isPaused => isPaused;
+    public GameTimer timer;
 
     private CharacterController controller;
     private Vector2 moveInput;
@@ -196,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager != null && gameManager.isPaused) return;
+        if (gameManager.isPaused || timer.isDead) return;
         isGrounded = controller.isGrounded;
 
         if (isGrounded)
