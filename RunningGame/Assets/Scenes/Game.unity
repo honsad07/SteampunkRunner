@@ -2526,19 +2526,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   gameManager: {fileID: 2134255111}
   timer: {fileID: 2134255112}
-  speed: 8
+  speed: 7
   sprintMultiplier: 2.3
   jumpHeight: 1.4
   gravity: -35
   maxWallJumps: 1
-  wallJumpPushStrength: 13
+  wallJumpPushStrength: 8
   wallJumpPushDuration: 0.35
   crouchMultiplier: 0.5
   slideDeceleration: 3
   slopeAcceleration: 30
   maxSlideSpeed: 50
   mainCamera: {fileID: 1293537580}
-  cameraSensitivity: 0.5
+  cameraSensitivity: 0.3
 --- !u!114 &1930664385
 MonoBehaviour:
   m_ObjectHideFlags: 0

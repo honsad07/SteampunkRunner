@@ -6,7 +6,7 @@ public class WaitingRoomTrigger : MonoBehaviour
     public RoomGenerator generator;
     public GameTimer timer;
 
-    public float waitTimer = 10f;
+    public float waitTimer = 5f;
 
     private void OnTriggerEnter(Collider other)
     {
