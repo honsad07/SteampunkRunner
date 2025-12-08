@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsTouchingWall()
     {
-        float distance = 0.6f;
+        float distance = 1f;
     
         Vector3[] directions = {
             transform.forward,
@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool GetWallNormal(out Vector3 wallNormal)
     {
-        float distance = 0.6f;
+        float distance = 1f;
         Vector3[] directions = {
             transform.forward,
             -transform.forward,

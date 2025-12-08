@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 759055108517831848}
   - component: {fileID: 94157006958376979}
   - component: {fileID: 5169422008503993942}
-  - component: {fileID: 8887326266574868990}
+  - component: {fileID: 9024482019099601688}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -585,8 +585,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8887326266574868990
-SphereCollider:
+--- !u!65 &9024482019099601688
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -604,7 +604,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3107728191463294071
 GameObject:
@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 5297951917676952612}
   - component: {fileID: 2829502424136434005}
   - component: {fileID: 6405396152542008377}
-  - component: {fileID: 675613797043106747}
+  - component: {fileID: 2795674050137881991}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -696,8 +696,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &675613797043106747
-SphereCollider:
+--- !u!65 &2795674050137881991
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -715,7 +715,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3247097582805554950
 GameObject:
@@ -1144,7 +1144,7 @@ GameObject:
   - component: {fileID: 2778089290120116136}
   - component: {fileID: 576370779811845232}
   - component: {fileID: 7878818398961210850}
-  - component: {fileID: 8471671961465019413}
+  - component: {fileID: 5766929930177072218}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -1223,8 +1223,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8471671961465019413
-SphereCollider:
+--- !u!65 &5766929930177072218
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1242,7 +1242,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5144270290348483590
 GameObject:
@@ -1255,7 +1255,7 @@ GameObject:
   - component: {fileID: 8471417318330606229}
   - component: {fileID: 308251311876064629}
   - component: {fileID: 2892334293812840876}
-  - component: {fileID: 8581635853789412268}
+  - component: {fileID: 4514917484789044205}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -1334,8 +1334,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8581635853789412268
-CapsuleCollider:
+--- !u!65 &4514917484789044205
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1352,11 +1352,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Size: {x: 1.0000004, y: 2.0000005, z: 1.0000002}
+  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
 --- !u!1 &5164171466352290565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2328,7 @@ GameObject:
   - component: {fileID: 9106369554571066356}
   - component: {fileID: 6607722063952753499}
   - component: {fileID: 4638831553424543515}
-  - component: {fileID: 2561916558508088904}
+  - component: {fileID: 4237722389060296662}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -2409,8 +2407,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2561916558508088904
-SphereCollider:
+--- !u!65 &4237722389060296662
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2428,7 +2426,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9090679578912389760
 GameObject:
