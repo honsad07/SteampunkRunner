@@ -8,7 +8,14 @@ public class GameTimer : MonoBehaviour
     public bool isRunning = true;
     public bool isDead = false;
 
-    public GameObject loseScreenPanel; 
+    public GameObject loseScreenPanel;
+
+    private Score scoreScript; 
+
+    private void Start()
+    {
+        scoreScript = FindFirstObjectByType<Score>();
+    }
 
     void Update()
     {
@@ -36,7 +43,8 @@ public class GameTimer : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 0f; 
+        Time.timeScale = 0f;
+        scoreScript.newScore = 0;
     }
 
     private void DisplayTimer()

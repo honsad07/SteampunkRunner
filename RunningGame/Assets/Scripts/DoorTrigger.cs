@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
+    private Score scoreScript;
+
     public GameObject doorToDisable;
     public bool isWaitingRoomDoor = false;
     public RoomGenerator generator;
@@ -13,7 +15,8 @@ public class DoorTrigger : MonoBehaviour
 
     private void Start()
     {
-        timer = FindObjectOfType<GameTimer>();
+        timer = FindFirstObjectByType<GameTimer>();
+        scoreScript = FindFirstObjectByType<Score>();
         if (timer == null)
         {
             Debug.LogError("DoorTrigger could not find GameTimer in the scene!");

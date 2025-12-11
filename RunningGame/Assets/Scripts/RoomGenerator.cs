@@ -24,7 +24,7 @@ public class RoomGenerator : MonoBehaviour
 
     void Start()
     {
-        gameTimer = GameObject.FindObjectOfType<GameTimer>(true);
+        gameTimer = GameObject.FindFirstObjectByType<GameTimer>();
         GenerateRooms();
         
         DoorTrigger.canProceed = true; 
@@ -71,7 +71,8 @@ public class RoomGenerator : MonoBehaviour
         currentEndWaitingRoom = newEndWaitingRoom;
 
         level++;
-        roomCount += 3;
+        
+        roomCount += Random.Range(5, 11);
     }
 
     GameObject ChooseNextRoom()

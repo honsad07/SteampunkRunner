@@ -3,10 +3,16 @@ using System.Collections;
 
 public class WaitingRoomTrigger : MonoBehaviour
 {
+    private Score scoreScript;
     public RoomGenerator generator;
     public GameTimer timer;
 
     public float waitTimer = 5f;
+
+    private void Start()
+    {
+        scoreScript = FindFirstObjectByType<Score>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,6 +21,10 @@ public class WaitingRoomTrigger : MonoBehaviour
             if (timer != null)
             {
                 timer.isRunning = false;
+                scoreScript.newScore += 99 - (int)Mathf.Floor(timer.timeRemaining);
+                scoreScript.newScore *= scoreScript.multiplier;
+                scoreScript.multiplier = 1;
+                scoreScript.score += scoreScript.newScore;
             }
 
             generator.OnReachedWaitingRoom();
